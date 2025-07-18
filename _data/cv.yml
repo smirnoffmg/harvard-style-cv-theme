@@ -1,0 +1,18 @@
+sections:
+  - title: Education # Section title
+    entries:
+      - title: "University Name" # Institution name
+        sub: "Degree, Major" # Degree/major (optional)
+        location: "City, Country" # Location (optional)
+        dates: "Year or Date Range" # Dates (optional)
+        bullets:
+          - "Key achievement or detail."
+          - "Another bullet point."
+  - title: Experience
+    entries:
+      - title: "Job Title · Employer"
+        location: "City, Country"
+        dates: "Year or Date Range"
+        bullets:
+          - "What you did, impact, etc."
+          - "Another accomplishment."

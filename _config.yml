@@ -1,0 +1,15 @@
+title: "Your Name" # Your full name (large, bold, centered)
+email: "your@email.com" # Your email address
+phone: "(123) 456-7890" # Your phone number (optional)
+address: "123 Main St, City, Country" # Your address (optional)
+website: "https://yourwebsite.com" # Your website (optional)
+department: "Your Department, University, City, Country" # Department/affiliation (optional)
+affiliation: "Optional: Additional affiliation or department" # Second affiliation (optional)
+linkedin: "linkedin.com/in/yourprofile" # LinkedIn profile (optional)
+description: "Harvard‑style CV • Example" # Site description (for SEO)
+baseurl: "" # GitHub Pages baseurl (leave blank for user pages)
+url: "https://yourusername.github.io" # Your GitHub Pages URL
+plugins:
+  - jekyll-seo-tag
+  - jekyll-feed
+markdown: kramdown

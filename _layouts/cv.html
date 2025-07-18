@@ -1,0 +1,54 @@
+---
+layout: default
+---
+<article class="cv">
+    <header class="cv-header">
+        <h1 class="cv-name">{{ site.title }}</h1>
+        {% if site.email %}
+        <div class="cv-contact">{{ site.email }}</div>
+        {% endif %}
+        {% if site.address %}
+        <div class="cv-contact">{{ site.address }}</div>
+        {% endif %}
+        {% if site.phone %}
+        <div class="cv-contact">{{ site.phone }}</div>
+        {% endif %}
+        {% if site.website %}
+        <div class="cv-contact"><a href="{{ site.website }}">{{ site.website }}</a></div>
+        {% endif %}
+        {% if site.department %}
+        <div class="cv-affiliation">{{ site.department }}</div>
+        {% endif %}
+        {% if site.affiliation %}
+        <div class="cv-affiliation">{{ site.affiliation }}</div>
+        {% endif %}
+    </header>
+
+    {% for section in site.data.cv.sections %}
+    <section class="cv-section">
+        <h2 class="cv-section-title">{{ section.title | upcase }}</h2>
+        <hr class="cv-section-rule" />
+        {% for e in section.entries %}
+        <div class="cv-entry">
+            <div class="cv-entry-header">
+                <div class="cv-entry-main">
+                    <span class="cv-entry-institution">{{ e.title }}</span>
+                    {% if e.sub %}<span class="cv-entry-degree">, <em>{{ e.sub }}</em></span>{% endif %}
+                </div>
+                <div class="cv-entry-meta">
+                    {% if e.location %}<span class="cv-entry-location">{{ e.location }}</span>{% endif %}
+                    {% if e.dates %}<span class="cv-entry-dates">{{ e.dates }}</span>{% endif %}
+                </div>
+            </div>
+            {% if e.bullets %}
+            <ul class="cv-entry-bullets">
+                {% for b in e.bullets %}
+                <li>{{ b }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endfor %}
+</article>
