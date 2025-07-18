@@ -5,7 +5,9 @@ address: "123 Main St, City, Country" # Your address (optional)
 website: "https://yourwebsite.com" # Your website (optional)
 department: "Your Department, University, City, Country" # Department/affiliation (optional)
 affiliation: "Optional: Additional affiliation or department" # Second affiliation (optional)
-linkedin: "linkedin.com/in/yourprofile" # LinkedIn profile (optional)
+linkedin: yourprofile
+twitter: yourprofile
+github: yourprofile
 description: "Harvard‑style CV • Example" # Site description (for SEO)
 baseurl: "" # GitHub Pages baseurl (leave blank for user pages)
 url: "https://yourusername.github.io" # Your GitHub Pages URL

@@ -16,3 +16,37 @@ sections:
         bullets:
           - "What you did, impact, etc."
           - "Another accomplishment."
+  - title: Skills
+    entries:
+      - title: "Programming Languages"
+        bullets:
+          - "Python, JavaScript, Ruby, C++"
+      - title: "Frameworks & Tools"
+        bullets:
+          - "Jekyll, React, Node.js, Git, Docker"
+  - title: Publications
+    entries:
+      - title: "Article Title"
+        sub: "Journal Name, Year"
+        bullets:
+          - "Short description or highlight of the publication."
+      - title: "Conference Paper Title"
+        sub: "Conference Name, Year"
+        bullets:
+          - "Summary of the paper or your contribution."
+  - title: Projects
+    entries:
+      - title: "Open Source Project Name"
+        sub: "Role (e.g., Maintainer)"
+        location: "GitHub"
+        dates: "2022-Present"
+        bullets:
+          - "Brief description of the project."
+          - "Key features or your contributions."
+      - title: "Personal Website"
+        sub: "Designer & Developer"
+        location: "yourwebsite.com"
+        dates: "2021-Present"
+        bullets:
+          - "Built with Jekyll and custom CSS."
+          - "Showcases portfolio and blog."
