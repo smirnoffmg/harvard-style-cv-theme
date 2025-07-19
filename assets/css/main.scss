@@ -122,6 +122,14 @@ ul {
   margin-left: 1.2em;
 }
 
+.cv-socials a {
+  display: inline-block;
+  vertical-align: middle;
+}
+.cv-socials a:not(:last-child) {
+  margin-right: 0.5em;
+}
+
 @media (max-width: 800px) {
   body {
     margin: 0.5in 0.2in;
