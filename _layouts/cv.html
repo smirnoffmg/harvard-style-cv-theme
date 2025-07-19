@@ -5,7 +5,7 @@ layout: default
     <header class="cv-header">
         <h1 class="cv-name">{{ site.title }}</h1>
         {% if site.email %}
-        <div class="cv-contact">{{ site.email }}</div>
+        <div class="cv-contact"><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
         {% endif %}
         {% if site.address %}
         <div class="cv-contact">{{ site.address }}</div>
@@ -14,7 +14,7 @@ layout: default
         <div class="cv-contact">{{ site.phone }}</div>
         {% endif %}
         {% if site.website %}
-        <div class="cv-contact"><a href="{{ site.website }}">{{ site.website }}</a></div>
+        <div class="cv-contact"><a href="{{ site.website  }}">{{ site.website }}</a></div>
         {% endif %}
         <div class="cv-socials" style="margin-top:0.5em;">
             {% if site.linkedin %}

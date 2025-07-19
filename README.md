@@ -36,6 +36,7 @@ remote_theme: smirnoffmg/harvard-style-cv-theme
 - **Print/PDF friendly**: styled for crisp print/PDF results
 - **Responsive**: looks great on all screens
 - **Social icons**: LinkedIn, GitHub, Twitter, Telegram (just add your usernames)
+- **Contact links**: Email is rendered as a clickable mailto: link, and website as a clickable URL in the CV header for easy access.
 
 ---
 
@@ -54,10 +55,10 @@ remote_theme: smirnoffmg/harvard-style-cv-theme
 ### `_config.yml` fields
 ```yaml
 title: "Your Name"
-email: "your@email.com"
+email: "your@email.com"        # Will be a clickable mailto: link in the header
 phone: "(123) 456-7890"
 address: "123 Main St, City, Country"
-website: "https://yourwebsite.com"
+website: "https://yourwebsite.com" # Will be a clickable link in the header
 department: "Your Department, University, City, Country"
 affiliation: "Optional: Additional affiliation or department"
 linkedin: yourlinkedinusername   # Just the username, e.g. johndoe
