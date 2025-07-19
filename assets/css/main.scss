@@ -155,8 +155,18 @@ ul {
     margin-bottom: 0.1em;
   }
   .cv-entry-meta {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     margin-top: 0.1em;
+  }
+  .cv-entry-location {
     text-align: left;
+  }
+  .cv-entry-dates {
+    text-align: right;
+    flex-shrink: 0;
+    min-width: 80px;
   }
 }
 
