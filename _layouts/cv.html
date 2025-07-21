@@ -53,6 +53,21 @@ layout: default
             </a>
             {% endif %}
         </div>
+        <div class="cv-socials-print">
+            {% if site.linkedin %}
+            <a href="https://linkedin.com/in/{{ site.linkedin }}">LinkedIn: https://linkedin.com/in/{{ site.linkedin
+                }}</a>
+            {% endif %}
+            {% if site.github %}
+            <a href="https://github.com/{{ site.github }}">GitHub: https://github.com/{{ site.github }}</a>
+            {% endif %}
+            {% if site.twitter %}
+            <a href="https://twitter.com/{{ site.twitter }}">Twitter: https://twitter.com/{{ site.twitter }}</a>
+            {% endif %}
+            {% if site.telegram %}
+            <a href="https://t.me/{{ site.telegram }}">Telegram: https://t.me/{{ site.telegram }}</a>
+            {% endif %}
+        </div>
         {% if site.department %}
         <div class="cv-affiliation">{{ site.department }}</div>
         {% endif %}

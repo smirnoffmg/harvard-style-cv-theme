@@ -130,6 +130,17 @@ ul {
   margin-right: 0.5em;
 }
 
+.cv-socials-print {
+  display: none;
+  font-size: 0.95rem;
+  margin-top: 0.5em;
+}
+
+.cv-socials-print a {
+  display: block;
+  margin-bottom: 0.1em;
+}
+
 @media (max-width: 800px) {
   body {
     margin: 0.5in 0.2in;
@@ -194,10 +205,18 @@ ul {
     page-break-inside: avoid;
   }
   a {
-    color: #000;
-    text-decoration: underline;
+    color: #1a73e8 !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
+    position: relative;
+  }
+  a:after {
+    content: '';
   }
   .cv-section-rule {
     border-top: 1.5px solid #000;
   }
+  .cv-socials { display: none !important; }
+  .cv-socials-print { display: block !important; }
 }
