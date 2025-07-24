@@ -33,39 +33,48 @@ jobs:
     - name: Determine version bump
       id: version
       run: |
-        # Get the latest tag
-        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-        echo "Latest tag: $LATEST_TAG"
+        # Get the latest tag or use initial version
+        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
         
-        # Extract version numbers
-        VERSION=${LATEST_TAG#v}
-        MAJOR=$(echo $VERSION | cut -d. -f1)
-        MINOR=$(echo $VERSION | cut -d. -f2)
-        PATCH=$(echo $VERSION | cut -d. -f3)
-        
-        # Determine bump type based on commit messages since last tag
-        COMMITS_SINCE_TAG=$(git log --oneline $LATEST_TAG..HEAD)
-        
-        if echo "$COMMITS_SINCE_TAG" | grep -q "BREAKING CHANGE\|major:"; then
-          NEW_MAJOR=$((MAJOR + 1))
-          NEW_MINOR=0
-          NEW_PATCH=0
+        if [ -z "$LATEST_TAG" ]; then
+          # No tags exist, this is the first release
+          echo "No existing tags found. Creating first release."
+          NEW_VERSION="1.0.0"
           BUMP_TYPE="major"
-        elif echo "$COMMITS_SINCE_TAG" | grep -q "feat:\|feature:"; then
-          NEW_MAJOR=$MAJOR
-          NEW_MINOR=$((MINOR + 1))
-          NEW_PATCH=0
-          BUMP_TYPE="minor"
+          echo "First release: $NEW_VERSION"
         else
-          NEW_MAJOR=$MAJOR
-          NEW_MINOR=$MINOR
-          NEW_PATCH=$((PATCH + 1))
-          BUMP_TYPE="patch"
+          echo "Latest tag: $LATEST_TAG"
+          
+          # Extract version numbers
+          VERSION=${LATEST_TAG#v}
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+          
+          # Determine bump type based on commit messages since last tag
+          COMMITS_SINCE_TAG=$(git log --oneline $LATEST_TAG..HEAD)
+          
+          if echo "$COMMITS_SINCE_TAG" | grep -q "BREAKING CHANGE\|major:"; then
+            NEW_MAJOR=$((MAJOR + 1))
+            NEW_MINOR=0
+            NEW_PATCH=0
+            BUMP_TYPE="major"
+          elif echo "$COMMITS_SINCE_TAG" | grep -q "feat:\|feature:"; then
+            NEW_MAJOR=$MAJOR
+            NEW_MINOR=$((MINOR + 1))
+            NEW_PATCH=0
+            BUMP_TYPE="minor"
+          else
+            NEW_MAJOR=$MAJOR
+            NEW_MINOR=$MINOR
+            NEW_PATCH=$((PATCH + 1))
+            BUMP_TYPE="patch"
+          fi
+          
+          NEW_VERSION="$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
+          echo "Bump type: $BUMP_TYPE"
+          echo "New version: $NEW_VERSION"
         fi
-        
-        NEW_VERSION="$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
-        echo "Bump type: $BUMP_TYPE"
-        echo "New version: $NEW_VERSION"
         
         echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
         echo "bump_type=$BUMP_TYPE" >> $GITHUB_OUTPUT
