@@ -13,6 +13,7 @@ This constitution defines the technical constraints, architecture decisions, and
 - **Content Management**: YAML-based data files
 - **Markdown Processor**: Kramdown
 - **CI/CD**: GitHub Actions with automated testing and releases
+- **Ruby Version**: 3.2.x (required for Bundler 2.7.0 compatibility)
 
 ### File Structure Constraints
 ```
