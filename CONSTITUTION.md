@@ -92,15 +92,15 @@ sections:
 ## 🔄 Git Workflow & Branch Strategy
 
 ### 1. Branch Structure
-- **`master`**: Production-ready code, automatically deployed to GitHub Pages
+- **`main`**: Production-ready code, automatically deployed to GitHub Pages
 - **`develop`**: Active development branch, integration point for features
 - **`feature/*`**: Feature branches for new development (optional)
 
 ### 2. Development Process
 1. **Active development** happens in `develop` branch
 2. **Feature development** can use `feature/*` branches from `develop`
-3. **Merge requests** (MR) created from `develop` to `master`
-4. **Automated releases** triggered on successful merge to `master`
+3. **Merge requests** (MR) created from `develop` to `main`
+4. **Automated releases** triggered on successful merge to `main`
 
 ### 3. Version Management
 - **Semantic versioning**: Follow semver (MAJOR.MINOR.PATCH)
@@ -118,14 +118,14 @@ sections:
 - **Artifact generation**: Build and store site artifacts
 
 ### 2. Automated Release Process
-- **Trigger**: On merge to `master` branch
+- **Trigger**: On merge to `main` branch
 - **Version bump**: Automatically increment semantic version
 - **Release creation**: Generate GitHub release with changelog
 - **Asset upload**: Include built site as release asset
 - **Tag creation**: Create git tag for the release
 
 ### 3. GitHub Pages Deployment
-- **Source**: `master` branch
+- **Source**: `main` branch
 - **Build**: Automatic Jekyll build by GitHub Pages
 - **Deployment**: Available at `https://smirnoffmg.github.io/harvard-style-cv-theme`
 
@@ -181,7 +181,7 @@ sections:
 - **No environment variables**: Configuration through YAML files only
 
 ### 4. Git Workflow Restrictions
-- **No direct pushes to master**: All changes must go through develop branch
+- **No direct pushes to main**: All changes must go through develop branch
 - **No force pushes**: Maintain git history integrity
 - **No breaking changes without major version bump**: Follow semver strictly
 

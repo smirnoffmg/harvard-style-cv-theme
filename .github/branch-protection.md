@@ -4,7 +4,7 @@ This document outlines the recommended branch protection settings for this repos
 
 ## Required Settings
 
-### Master Branch Protection
+### Main Branch Protection
 - **Require a pull request before merging**: ✅ Enabled
 - **Require approvals**: 1 approval required
 - **Dismiss stale PR approvals when new commits are pushed**: ✅ Enabled
@@ -30,8 +30,8 @@ This document outlines the recommended branch protection settings for this repos
 ### Development Process
 1. **Feature development**: Create feature branches from `develop`
 2. **Integration**: Merge feature branches to `develop` via PR
-3. **Release preparation**: Create PR from `develop` to `master`
-4. **Automated release**: Merging to `master` triggers automated release
+3. **Release preparation**: Create PR from `develop` to `main`
+4. **Automated release**: Merging to `main` triggers automated release
 
 ### Commit Message Convention
 Use conventional commit messages for better automation:
@@ -47,7 +47,7 @@ Use conventional commit messages for better automation:
 ## Setup Instructions
 
 1. Go to repository Settings > Branches
-2. Add rule for `master` branch with above settings
+2. Add rule for `main` branch with above settings
 3. Add rule for `develop` branch with above settings
 4. Ensure GitHub Actions have proper permissions
 5. Configure required status checks for both branches
