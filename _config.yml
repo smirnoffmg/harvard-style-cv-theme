@@ -9,6 +9,7 @@ linkedin: yourprofile
 twitter: yourprofile
 github: yourprofile
 telegram: yourtelegramusername
+leetcode: yourleetcodeusername
 description: "Harvard‑style CV • Example" # Site description (for SEO)
 baseurl: "" # GitHub Pages baseurl (leave blank for user pages)
 url: "https://yourusername.github.io" # Your GitHub Pages URL

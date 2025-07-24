@@ -35,7 +35,7 @@ remote_theme: smirnoffmg/harvard-style-cv-theme
 - **GitHub Pages‑ready**: no unsupported plugins, works out of the box
 - **Print/PDF friendly**: styled for crisp print/PDF results
 - **Responsive**: looks great on all screens
-- **Social icons**: LinkedIn, GitHub, Twitter, Telegram (just add your usernames)
+- **Social icons**: LinkedIn, GitHub, Twitter, Telegram, LeetCode (just add your usernames)
 - **Contact links**: Email is rendered as a clickable mailto: link, and website as a clickable URL in the CV header for easy access.
 
 ---
@@ -65,6 +65,7 @@ linkedin: yourlinkedinusername   # Just the username, e.g. johndoe
 github: yourgithubusername       # Just the username, e.g. johndoe
 twitter: yourtwitterhandle      # Just the handle, e.g. johndoe
 telegram: yourtelegramusername  # Just the username, e.g. johndoe
+leetcode: yourleetcodeusername  # Just the username, e.g. johndoe
 # Optional Google Analytics (UA- or G- ID, or leave blank)
 google_analytics: G-XXXXXXXXXX
 description: "Harvard‑style CV • Example"
