@@ -15,5 +15,4 @@ baseurl: "" # GitHub Pages baseurl (leave blank for user pages)
 url: "https://yourusername.github.io" # Your GitHub Pages URL
 plugins:
   - jekyll-seo-tag
-  - jekyll-feed
 markdown: kramdown

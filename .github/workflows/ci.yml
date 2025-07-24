@@ -1,0 +1,82 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ develop, master ]
+  pull_request:
+    branches: [ develop, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        bundler-cache: true
+        
+    - name: Install dependencies
+      run: |
+        bundle install
+        
+    - name: Validate YAML syntax
+      run: |
+        # Validate _config.yml
+        ruby -e "require 'yaml'; YAML.load_file('_config.yml')"
+        # Validate _data/cv.yml
+        ruby -e "require 'yaml'; YAML.load_file('_data/cv.yml')"
+        echo "✅ All YAML files are valid"
+        
+    - name: Build Jekyll site
+      run: |
+        bundle exec jekyll build --verbose
+        
+    - name: Validate HTML structure
+      run: |
+        # Check if index.html was generated
+        if [ ! -f "_site/index.html" ]; then
+          echo "❌ index.html not found in build output"
+          exit 1
+        fi
+        
+        # Check if CSS was generated
+        if [ ! -f "_site/assets/css/main.css" ]; then
+          echo "❌ main.css not found in build output"
+          exit 1
+        fi
+        
+        echo "✅ HTML structure validation passed"
+        
+    - name: Check for broken links
+      run: |
+        # Install html-proofer if not available
+        gem install html-proofer
+        
+        # Check for broken links (excluding external links for now)
+        bundle exec htmlproofer _site --allow-missing-href --allow-hash-href --disable-external
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: jekyll-build
+        path: _site/
+        retention-days: 7
+        
+    - name: Test remote theme compatibility
+      run: |
+        # Create a minimal test config for remote theme
+        cat > test_config.yml << EOF
+        remote_theme: smirnoffmg/harvard-style-cv-theme
+        plugins:
+          - jekyll-remote-theme
+        EOF
+        
+        # Test build with remote theme
+        bundle exec jekyll build --config test_config.yml --verbose
+        
+        echo "✅ Remote theme compatibility test passed" 
