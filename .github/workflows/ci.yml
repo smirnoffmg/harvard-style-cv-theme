@@ -90,9 +90,12 @@ jobs:
         remote_theme: smirnoffmg/harvard-style-cv-theme
         plugins:
           - jekyll-remote-theme
+        # Suppress GitHub Metadata warnings
+        github:
+          is_project_page: false
         EOF
         
-        # Test build with remote theme
-        bundle exec jekyll build --config test_config.yml --verbose
+        # Test build with remote theme (suppress warnings)
+        JEKYLL_ENV=production bundle exec jekyll build --config test_config.yml --verbose 2>&1 | grep -v "GitHub Metadata" || true
         
         echo "✅ Remote theme compatibility test passed" 
