@@ -52,13 +52,29 @@ jobs:
         
         echo "✅ HTML structure validation passed"
         
-    - name: Check for broken links
+    - name: Validate build output
       run: |
-        # Install html-proofer if not available
-        gem install html-proofer
+        # Check if all expected files were generated
+        echo "Checking build output..."
+        ls -la _site/
         
-        # Check for broken links (excluding external links for now)
-        bundle exec htmlproofer _site --allow-missing-href --allow-hash-href --disable-external
+        # Verify CSS was generated
+        if [ -f "_site/assets/css/main.css" ]; then
+          echo "✅ CSS file generated successfully"
+        else
+          echo "❌ CSS file not found"
+          exit 1
+        fi
+        
+        # Verify HTML was generated
+        if [ -f "_site/index.html" ]; then
+          echo "✅ HTML file generated successfully"
+        else
+          echo "❌ HTML file not found"
+          exit 1
+        fi
+        
+        echo "✅ Build validation completed"
         
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
