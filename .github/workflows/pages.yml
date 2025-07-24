@@ -23,9 +23,6 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -42,6 +39,11 @@ jobs:
         env:
           JEKYLL_ENV: production
           
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        with:
+          enablement: true
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -52,4 +54,5 @@ jobs:
     needs: build
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4 
