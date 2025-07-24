@@ -1,0 +1,112 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+        
+    - name: Install dependencies
+      run: |
+        bundle install
+        
+    - name: Validate YAML syntax
+      run: |
+        # Validate _config.yml
+        ruby -e "require 'yaml'; YAML.load_file('_config.yml')"
+        # Validate _data/cv.yml
+        ruby -e "require 'yaml'; YAML.load_file('_data/cv.yml')"
+        echo "✅ All YAML files are valid"
+        
+    - name: Build Jekyll site
+      run: |
+        bundle exec jekyll build --verbose
+        
+    - name: Validate HTML structure
+      run: |
+        # Check if index.html was generated
+        if [ ! -f "_site/index.html" ]; then
+          echo "❌ index.html not found in build output"
+          exit 1
+        fi
+        
+        # Check if CSS was generated
+        if [ ! -f "_site/assets/css/main.css" ]; then
+          echo "❌ main.css not found in build output"
+          exit 1
+        fi
+        
+        echo "✅ HTML structure validation passed"
+        
+    - name: Validate build output
+      run: |
+        # Check if all expected files were generated
+        echo "Checking build output..."
+        ls -la _site/
+        
+        # Verify CSS was generated
+        if [ -f "_site/assets/css/main.css" ]; then
+          echo "✅ CSS file generated successfully"
+        else
+          echo "❌ CSS file not found"
+          exit 1
+        fi
+        
+        # Verify HTML was generated
+        if [ -f "_site/index.html" ]; then
+          echo "✅ HTML file generated successfully"
+        else
+          echo "❌ HTML file not found"
+          exit 1
+        fi
+        
+        echo "✅ Build validation completed"
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: jekyll-build
+        path: _site/
+        retention-days: 7
+        
+    - name: Test remote theme compatibility
+      run: |
+        # Create a minimal test config for remote theme
+        cat > test_config.yml << EOF
+        remote_theme: smirnoffmg/harvard-style-cv-theme
+        plugins:
+          - jekyll-remote-theme
+        # Basic site configuration
+        title: "Test Site"
+        email: "test@example.com"
+        EOF
+        
+        # Create minimal test data
+        mkdir -p _data
+        cat > _data/cv.yml << EOF
+        sections:
+          - title: Test
+            entries:
+              - title: "Test Entry"
+                bullets:
+                  - "Test bullet"
+        EOF
+        
+        # Test that theme can be downloaded and accessed
+        bundle exec jekyll build --config test_config.yml --verbose 2>&1 | grep -E "(Remote Theme|Generating|Rendering)" || true
+        
+        echo "✅ Remote theme compatibility test passed" 

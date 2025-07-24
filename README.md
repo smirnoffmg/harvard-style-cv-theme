@@ -1,195 +1,205 @@
 # Harvard‑Style CV Jekyll Template for GitHub Pages 🎓
 
+A clean, professional CV template following the classic Harvard format. Perfect for academics, researchers, and professionals who want a timeless, print-friendly resume that works seamlessly on GitHub Pages.
+
 ## 🖼️ Screenshots
 
 ### Desktop
-
 ![Desktop screenshot of the Harvard-style CV theme](assets/screenshot-desktop.png)
 
 ### Mobile
-
 ![Mobile screenshot of the Harvard-style CV theme](assets/screenshot-mobile.png)
 
 *If you don't see images above, add your own screenshots to the `assets/` folder!*
 
 ---
 
+## 🚀 Quick Start
 
-## 🚀 Remote Theme Usage
-You can use this template **without forking** by adding the following to your Jekyll site’s `_config.yml`:
+### Option 1: Remote Theme (Recommended)
+Add this to your Jekyll site's `_config.yml`:
 
 ```yaml
 remote_theme: smirnoffmg/harvard-style-cv-theme
 ```
 
-- Then add your own `_config.yml` and `_data/cv.yml` as described below.
-- [GitHub Pages supports `remote_theme` by default.](https://github.com/benbalter/jekyll-remote-theme)
+Then create your own `_config.yml` and `_data/cv.yml` files with your information.
 
----
-
-## ✨ Features
-- **Classic Harvard layout**: bold centered name, centered contact info, department/affiliation line
-- **Section headings**: all-caps, bold, with horizontal rules
-- **Entry layout**: left-aligned institution/title, right-aligned date/location, bullet-point lists
-- **Modular data**: manage all CV content via `_data/cv.yml`
-- **GitHub Pages‑ready**: no unsupported plugins, works out of the box
-- **Print/PDF friendly**: styled for crisp print/PDF results
-- **Responsive**: looks great on all screens
-- **Social icons**: LinkedIn, GitHub, Twitter, Telegram, LeetCode (just add your usernames)
-- **Contact links**: Email is rendered as a clickable mailto: link, and website as a clickable URL in the CV header for easy access.
-
----
-
-## 🏗️ Using by Forking (Alternative)
-1. **Fork this repository** to your own GitHub account.
-2. **Edit your CV content:**
-   - Update `_config.yml` with your name, contact info, etc.
-   - Edit `_data/cv.yml` to add your education, experience, skills, etc.
-3. **Enable GitHub Pages** in your repo settings (set source to `main` branch, `/ (root)` folder).
+### Option 2: Fork & Customize
+1. **Fork this repository** to your GitHub account
+2. **Edit your CV content** in `_config.yml` and `_data/cv.yml`
+3. **Enable GitHub Pages** in your repo settings
 4. Visit `https://yourusername.github.io/your-repo-name` to see your CV!
 
 ---
 
-## 📝 Configuration Guide
+## 📝 Configuration Examples
 
-### `_config.yml` fields
+### `_config.yml` - Site Configuration
 ```yaml
-title: "Your Name"
-email: "your@email.com"        # Will be a clickable mailto: link in the header
-phone: "(123) 456-7890"
-address: "123 Main St, City, Country"
-website: "https://yourwebsite.com" # Will be a clickable link in the header
-department: "Your Department, University, City, Country"
-affiliation: "Optional: Additional affiliation or department"
-linkedin: yourlinkedinusername   # Just the username, e.g. johndoe
-github: yourgithubusername       # Just the username, e.g. johndoe
-twitter: yourtwitterhandle      # Just the handle, e.g. johndoe
-telegram: yourtelegramusername  # Just the username, e.g. johndoe
-leetcode: yourleetcodeusername  # Just the username, e.g. johndoe
-# Optional Google Analytics (UA- or G- ID, or leave blank)
+# Basic Information
+title: "Dr. Jane Smith"
+email: "jane.smith@university.edu"
+phone: "(555) 123-4567"
+address: "123 Academic Street, Cambridge, MA 02138"
+website: "https://janesmith.com"
+
+# Professional Affiliation
+department: "Department of Computer Science, Harvard University, Cambridge, MA"
+affiliation: "Research Fellow, MIT Computer Science & AI Laboratory"
+
+# Social Media (just usernames, not full URLs)
+linkedin: janesmith
+github: janesmith
+twitter: janesmith
+telegram: janesmith
+leetcode: janesmith
+
+# Optional: Google Analytics
 google_analytics: G-XXXXXXXXXX
-description: "Harvard‑style CV • Example"
+
+# Site Settings
+description: "Harvard-style CV • Dr. Jane Smith"
+baseurl: ""
+url: "https://janesmith.github.io"
 ```
 
-### `_data/cv.yml` structure
+### `_data/cv.yml` - CV Content
 ```yaml
 sections:
   - title: Education
     entries:
-      - title: "University Name"
-        sub: "Degree, Major"
-        location: "City, Country"
-        dates: "Year or Date Range"
+      - title: "Harvard University"
+        sub: "Ph.D. in Computer Science"
+        location: "Cambridge, MA"
+        dates: "2018-2023"
         bullets:
-          - "Key achievement or detail."
-          - "Another bullet point."
+          - "Dissertation: 'Advanced Machine Learning Algorithms for Natural Language Processing'"
+          - "Advisor: Dr. John Doe"
+          - "GPA: 3.9/4.0"
+      
+      - title: "MIT"
+        sub: "M.S. in Computer Science"
+        location: "Cambridge, MA"
+        dates: "2016-2018"
+        bullets:
+          - "Thesis: 'Neural Network Optimization Techniques'"
+          - "Graduated with distinction"
+
   - title: Experience
     entries:
-      - title: "Job Title · Employer"
-        location: "City, Country"
-        dates: "Year or Date Range"
+      - title: "Research Scientist · Google Research"
+        location: "Mountain View, CA"
+        dates: "2023-Present"
         bullets:
-          - "What you did, impact, etc."
-          - "Another accomplishment."
+          - "Lead research on large language models and their applications"
+          - "Published 5 papers in top-tier conferences (NeurIPS, ICML)"
+          - "Mentored 3 PhD students and 2 research interns"
+      
+      - title: "Graduate Research Assistant · Harvard University"
+        location: "Cambridge, MA"
+        dates: "2018-2023"
+        bullets:
+          - "Developed novel algorithms for natural language understanding"
+          - "Collaborated with international research teams"
+          - "Presented work at 8 international conferences"
+
+  - title: Publications
+    entries:
+      - title: "Advanced Neural Architectures for Language Processing"
+        sub: "NeurIPS 2023"
+        bullets:
+          - "Proposed a new transformer variant that improves efficiency by 40%"
+          - "Cited 150+ times within 6 months of publication"
+      
+      - title: "Efficient Training Methods for Large Language Models"
+        sub: "ICML 2022"
+        bullets:
+          - "Developed techniques to reduce training time by 60%"
+          - "Open-sourced implementation with 500+ GitHub stars"
+
   - title: Skills
     entries:
       - title: "Programming Languages"
         bullets:
-          - "Python, JavaScript, Ruby, C++"
-      - title: "Frameworks & Tools"
+          - "Python, C++, JavaScript, Rust"
+      
+      - title: "Machine Learning & AI"
         bullets:
-          - "Jekyll, React, Node.js, Git, Docker"
-  - title: Publications
+          - "PyTorch, TensorFlow, Transformers, Computer Vision"
+      
+      - title: "Tools & Platforms"
+        bullets:
+          - "Git, Docker, AWS, Google Cloud Platform"
+
+  - title: Awards & Honors
     entries:
-      - title: "Article Title"
-        sub: "Journal Name, Year"
+      - title: "NSF Graduate Research Fellowship"
+        dates: "2018-2021"
         bullets:
-          - "Short description or highlight of the publication."
-      - title: "Conference Paper Title"
-        sub: "Conference Name, Year"
+          - "Prestigious fellowship for outstanding graduate students"
+      
+      - title: "Best Paper Award"
+        sub: "ACL 2022"
         bullets:
-          - "Summary of the paper or your contribution."
-  - title: Projects
-    entries:
-      - title: "Open Source Project Name"
-        sub: "Role (e.g., Maintainer)"
-        location: "GitHub"
-        dates: "2022-Present"
-        bullets:
-          - "Brief description of the project."
-          - "Key features or your contributions."
-      - title: "Personal Website"
-        sub: "Designer & Developer"
-        location: "yourwebsite.com"
-        dates: "2021-Present"
-        bullets:
-          - "Built with Jekyll and custom CSS."
-          - "Showcases portfolio and blog."
+          - "Recognized for innovative contributions to NLP field"
 ```
-- You can use **HTML** in bullets for bold, italics, or links.
 
 ---
 
-## 🎨 Customization
-- Edit `assets/css/main.scss` to change fonts, colors, or spacing.
-- Layout is in `_layouts/cv.html`.
-- You can customize the About page by editing `about.markdown`.
+## ✨ Features
+
+- **Classic Harvard layout** with bold centered name and structured sections
+- **Print/PDF friendly** - looks crisp when printed or saved as PDF
+- **Responsive design** - perfect on desktop, tablet, and mobile
+- **Social integration** - LinkedIn, GitHub, Twitter, Telegram, LeetCode icons
+- **Easy customization** - manage all content through simple YAML files
+- **GitHub Pages ready** - works out of the box with no additional setup
+- **SEO optimized** - built-in search engine optimization
+- **CI/CD pipeline** - automated testing, building, and deployment
+- **Semantic versioning** - automatic version management and releases
 
 ---
 
-## 📊 Google Analytics (Optional)
-To enable Google Analytics, add your tracking ID to `_config.yml`:
-```yaml
-google_analytics: G-XXXXXXXXXX  # or UA-XXXXXXXXX-X
-```
-If left blank or omitted, analytics will not be included.
+## 📖 Documentation
+
+For detailed technical documentation, configuration guides, and troubleshooting:
+
+📋 **[View Full Documentation](CONSTITUTION.md)**
+
+The documentation includes:
+- Complete configuration guide
+- Data structure examples
+- Customization options
+- Troubleshooting solutions
+- Technical constraints and architecture
+- CI/CD pipeline and development workflow
+- Branch protection and release management
+
+---
+
+## 🎯 Perfect For
+
+- **Academics** and researchers
+- **Graduate students** applying for programs
+- **Professionals** seeking clean, traditional resumes
+- **Anyone** who values classic, timeless design
 
 ---
 
 ## 📄 License
+
 MIT — free to use, modify, and share.
 
 ---
 
-## 🛠️ Troubleshooting: Blank or Empty Page with Remote Theme
+## 🤝 Contributing
 
-If you use this theme as a `remote_theme` and see a blank or empty page (no HTML output), check the following:
+Found a bug or have a feature request? [Open an issue](https://github.com/smirnoffmg/harvard-style-cv-theme/issues) or submit a pull request!
 
-1. **Add an `index.md` file**
-   - Your test repo must have an `index.md` (or `index.html`) file with at least:
-     ```markdown
-     ---
-     layout: cv
-     title: CV
-     ---
-     ```
-2. **Check `_config.yml`**
-   - It should contain:
-     ```yaml
-     remote_theme: smirnoffmg/harvard-style-cv-theme
-     ```
-   - Do **not** include a `theme:` line.
-3. **Provide `_data/cv.yml`**
-   - Make sure your repo has a valid `_data/cv.yml` file with at least one section and entry.
-4. **Ensure valid front matter**
-   - All content files (like `index.md`) must start with `---` (YAML front matter).
-5. **Theme repository is public**
-   - The theme repo must be public for GitHub Pages to access it.
-6. **No custom plugins**
-   - Only use plugins supported by GitHub Pages.
-7. **Check GitHub Pages build logs**
-   - If the page is still blank, check the Pages build log (Actions tab or Pages status) for errors.
-8. **Wait for propagation**
-   - Sometimes, changes take a few minutes to appear.
+---
 
-### Minimal Test Repo Structure
+**Ready to create your professional CV?** 🚀
 
-```
-_config.yml
-_data/
-  cv.yml
-index.md
-```
-
-If you still see a blank page, double-check the above and consult the [GitHub Pages documentation](https://docs.github.com/en/pages/troubleshooting-github-pages-sites) for more help.
+[Fork this repository](https://github.com/smirnoffmg/harvard-style-cv-theme/fork) or [use as remote theme](#-quick-start) to get started!
 

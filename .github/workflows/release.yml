@@ -1,0 +1,127 @@
+name: Automated Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci') }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.2'
+        bundler-cache: true
+        
+    - name: Install dependencies
+      run: |
+        bundle install
+        
+    - name: Build Jekyll site
+      run: |
+        bundle exec jekyll build
+        
+    - name: Determine version bump
+      id: version
+      run: |
+        # Get the latest tag
+        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+        echo "Latest tag: $LATEST_TAG"
+        
+        # Extract version numbers
+        VERSION=${LATEST_TAG#v}
+        MAJOR=$(echo $VERSION | cut -d. -f1)
+        MINOR=$(echo $VERSION | cut -d. -f2)
+        PATCH=$(echo $VERSION | cut -d. -f3)
+        
+        # Determine bump type based on commit messages since last tag
+        COMMITS_SINCE_TAG=$(git log --oneline $LATEST_TAG..HEAD)
+        
+        if echo "$COMMITS_SINCE_TAG" | grep -q "BREAKING CHANGE\|major:"; then
+          NEW_MAJOR=$((MAJOR + 1))
+          NEW_MINOR=0
+          NEW_PATCH=0
+          BUMP_TYPE="major"
+        elif echo "$COMMITS_SINCE_TAG" | grep -q "feat:\|feature:"; then
+          NEW_MAJOR=$MAJOR
+          NEW_MINOR=$((MINOR + 1))
+          NEW_PATCH=0
+          BUMP_TYPE="minor"
+        else
+          NEW_MAJOR=$MAJOR
+          NEW_MINOR=$MINOR
+          NEW_PATCH=$((PATCH + 1))
+          BUMP_TYPE="patch"
+        fi
+        
+        NEW_VERSION="$NEW_MAJOR.$NEW_MINOR.$NEW_PATCH"
+        echo "Bump type: $BUMP_TYPE"
+        echo "New version: $NEW_VERSION"
+        
+        echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+        echo "bump_type=$BUMP_TYPE" >> $GITHUB_OUTPUT
+        
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.version.outputs.new_version }}
+        release_name: Release v${{ steps.version.outputs.new_version }}
+        body: |
+          ## What's Changed
+          
+          This release includes the following changes:
+          
+          ### 🚀 Features
+          - Automated semantic versioning
+          - GitHub Actions CI/CD pipeline
+          - Automated release management
+          
+          ### 🔧 Improvements
+          - Enhanced build validation
+          - Better error handling
+          - Improved documentation
+          
+          ### 🐛 Bug Fixes
+          - Various minor fixes and improvements
+          
+          ---
+          
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ github.event.before }}...${{ github.sha }}
+        draft: false
+        prerelease: false
+        
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./_site/
+        asset_name: harvard-cv-theme-v${{ steps.version.outputs.new_version }}.zip
+        asset_content_type: application/zip
+        
+    - name: Create Release Summary
+      run: |
+        echo "## Release Summary" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: v${{ steps.version.outputs.new_version }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Bump Type**: ${{ steps.version.outputs.bump_type }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Release URL**: ${{ steps.create_release.outputs.html_url }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Assets**: Built site uploaded as ZIP" >> $GITHUB_STEP_SUMMARY
+        
+    - name: Notify Release
+      run: |
+        echo "🎉 Release v${{ steps.version.outputs.new_version }} created successfully!"
+        echo "📦 Assets uploaded to GitHub release"
+        echo "🏷️  Tag: v${{ steps.version.outputs.new_version }}" 
