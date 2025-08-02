@@ -1,22 +1,12 @@
-# Harvard‑Style CV Jekyll Template for GitHub Pages 🎓
+# 🚀 Introducing Harvard-Style Jekyll CV Theme!
+Instantly create a professional academic CV with a classic Harvard look—customizable, mobile-friendly, and ready for GitHub Pages.
 
-A clean, professional CV template following the classic Harvard format. Perfect for academics, researchers, and professionals who want a timeless, print-friendly resume that works seamlessly on GitHub Pages.
-
-## 🖼️ Screenshots
-
-### Desktop
-![Desktop screenshot of the Harvard-style CV theme](assets/screenshot-desktop.png)
-
-### Mobile
-![Mobile screenshot of the Harvard-style CV theme](assets/screenshot-mobile.png)
-
-*If you don't see images above, add your own screenshots to the `assets/` folder!*
+👉 [Try the demo](https://smirnoffmg.github.io/) | ⭐ Star to support!
 
 ---
 
 ## 🚀 Quick Start
 
-### Option 1: Remote Theme (Recommended)
 Add this to your Jekyll site's `_config.yml`:
 
 ```yaml
@@ -24,12 +14,6 @@ remote_theme: smirnoffmg/harvard-style-cv-theme
 ```
 
 Then create your own `_config.yml` and `_data/cv.yml` files with your information.
-
-### Option 2: Fork & Customize
-1. **Fork this repository** to your GitHub account
-2. **Edit your CV content** in `_config.yml` and `_data/cv.yml`
-3. **Enable GitHub Pages** in your repo settings
-4. Visit `https://yourusername.github.io/your-repo-name` to see your CV!
 
 ---
 
@@ -158,38 +142,6 @@ sections:
 - **SEO optimized** - built-in search engine optimization
 - **CI/CD pipeline** - automated testing, building, and deployment
 - **Semantic versioning** - automatic version management and releases
-
----
-
-## 📖 Documentation
-
-For detailed technical documentation, configuration guides, and troubleshooting:
-
-📋 **[View Full Documentation](CONSTITUTION.md)**
-
-The documentation includes:
-- Complete configuration guide
-- Data structure examples
-- Customization options
-- Troubleshooting solutions
-- Technical constraints and architecture
-- CI/CD pipeline and development workflow
-- Branch protection and release management
-
----
-
-## 🎯 Perfect For
-
-- **Academics** and researchers
-- **Graduate students** applying for programs
-- **Professionals** seeking clean, traditional resumes
-- **Anyone** who values classic, timeless design
-
----
-
-## 📄 License
-
-MIT — free to use, modify, and share.
 
 ---
 
