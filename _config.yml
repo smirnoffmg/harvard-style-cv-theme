@@ -11,6 +11,8 @@ github: yourprofile
 telegram: yourtelegramusername
 leetcode: yourleetcodeusername
 description: "Harvard‑style CV • Example" # Site description (for SEO)
+# google_analytics: G-XXXXXXXXXX # Google Analytics ID (optional)
+# yandex_metrika: 12345678 # Yandex.Metrika counter ID (optional)
 baseurl: "" # GitHub Pages baseurl (leave blank for user pages)
 url: "https://yourusername.github.io" # Your GitHub Pages URL
 plugins:
