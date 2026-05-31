@@ -110,7 +110,7 @@ layout: default
             {% if e.bullets %}
             <ul class="cv-entry-bullets">
                 {% for b in e.bullets %}
-                <li>{{ b }}</li>
+                <li>{{ b | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
                 {% endfor %}
             </ul>
             {% endif %}
