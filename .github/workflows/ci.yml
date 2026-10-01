@@ -32,6 +32,10 @@ jobs:
         ruby -e "require 'yaml'; YAML.load_file('_data/cv.yml')"
         echo "✅ All YAML files are valid"
         
+    - name: Test release version script
+      run: |
+        .github/scripts/test-next-version.sh
+
     - name: Build Jekyll site
       run: |
         bundle exec jekyll build --verbose

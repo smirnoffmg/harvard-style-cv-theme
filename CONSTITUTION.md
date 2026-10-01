@@ -29,6 +29,9 @@ harvard-style-cv-theme/
 │   │   └── main.scss       # Stylesheet with print media queries
 │   └── screenshot-*.png    # README screenshots
 ├── .github/
+│   ├── scripts/
+│   │   ├── next-version.sh      # Semver bump from Conventional Commits
+│   │   └── test-next-version.sh # Its tests, run in CI
 │   ├── workflows/
 │   │   ├── ci.yml          # Continuous Integration workflow
 │   │   ├── release.yml     # Automated release workflow
@@ -122,7 +125,7 @@ sections:
 ### 3. Version Management
 - **Semantic versioning**: Follow semver (MAJOR.MINOR.PATCH)
 - **Automatic versioning**: `release.yml` derives the bump from commit message prefixes, so use Conventional Commits
-- **Release notes**: Write them in `CHANGELOG.md`; the GitHub release body is a fixed template
+- **Release notes**: GitHub generates them per release; `CHANGELOG.md` remains the curated record
 - **Tagging**: Automatic `vX.Y.Z` git tags for each release
 
 ## 🚀 CI/CD Pipeline
@@ -137,12 +140,13 @@ sections:
 
 ### 2. Automated Release Process (`release.yml`)
 - **Trigger**: Push to `main`, skipped when the head commit message contains `ci skip` or `skip ci`
-- **Version bump** from commit messages since the last tag:
-  - `BREAKING CHANGE` or `major:` → major
-  - `feat:` or `feature:` → minor
-  - anything else → patch
+- **Version bump**: `.github/scripts/next-version.sh` reads non-merge commits since the last tag (tested by `test-next-version.sh` in CI):
+  - `type!:`, `type(scope)!:` or a `BREAKING CHANGE:` footer → major
+  - `feat:` / `feat(scope):` → minor
+  - `fix:`, `perf:` or a non-conventional subject → patch
+  - only `docs`, `ci`, `chore`, `style`, `test`, `build`, `refactor` → no release
   - no tags yet → `1.0.0`
-- **Release creation**: GitHub release `vX.Y.Z` with a static body template — it does not list the actual commits; `CHANGELOG.md` is the real record
+- **Release creation**: `gh release create` with `--generate-notes` (GitHub's auto-generated notes since the previous tag)
 - **Asset upload**: Built site as `harvard-cv-theme-vX.Y.Z.zip`
 - **Tag creation**: The release creates the `vX.Y.Z` tag
 
