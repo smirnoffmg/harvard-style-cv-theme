@@ -93,7 +93,7 @@ sections:
 - **Typography**: Times New Roman (serif) for academic appearance
 - **Colors**: Black text on white background for print compatibility
 - **Spacing**: 1-inch margins on screen (0.5in in print), 1.3 line height
-- **Line length**: Body capped at `max-width: 44rem` (~85–90 characters per line). Do not raise it much: Bringhurst puts the limit for discontinuous text such as bibliographies at 85–90 characters (*The Elements of Typographic Style*, §2.1.2)
+- **Line length**: Body capped at `max-width: 40rem` (~86 characters per bullet line, measured). Do not raise it much: Bringhurst puts the limit for discontinuous text such as bibliographies at 85–90 characters (*The Elements of Typographic Style*, §2.1.2)
 - **Print optimization**: Separate print media queries
 - **Social icons**: SVG-based with fallback text for print
 
