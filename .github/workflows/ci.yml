@@ -87,30 +87,6 @@ jobs:
         path: _site/
         retention-days: 7
         
-    - name: Test remote theme compatibility
+    - name: Test minimal consumer site
       run: |
-        # Create a minimal test config for remote theme
-        cat > test_config.yml << EOF
-        remote_theme: smirnoffmg/harvard-style-cv-theme
-        plugins:
-          - jekyll-remote-theme
-        # Basic site configuration
-        title: "Test Site"
-        email: "test@example.com"
-        EOF
-        
-        # Create minimal test data
-        mkdir -p _data
-        cat > _data/cv.yml << EOF
-        sections:
-          - title: Test
-            entries:
-              - title: "Test Entry"
-                bullets:
-                  - "Test bullet"
-        EOF
-        
-        # Test that theme can be downloaded and accessed
-        bundle exec jekyll build --config test_config.yml --verbose 2>&1 | grep -E "(Remote Theme|Generating|Rendering)" || true
-        
-        echo "✅ Remote theme compatibility test passed" 
+        .github/scripts/test-minimal-site.sh

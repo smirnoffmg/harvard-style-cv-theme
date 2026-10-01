@@ -31,7 +31,8 @@ harvard-style-cv-theme/
 ├── .github/
 │   ├── scripts/
 │   │   ├── next-version.sh      # Semver bump from Conventional Commits
-│   │   └── test-next-version.sh # Its tests, run in CI
+│   │   ├── test-next-version.sh # Its tests, run in CI
+│   │   └── test-minimal-site.sh # Builds a required-fields-only site, run in CI
 │   ├── workflows/
 │   │   ├── ci.yml          # Continuous Integration workflow
 │   │   ├── release.yml     # Automated release workflow
@@ -100,6 +101,7 @@ sections:
 ### 5. Content Guidelines
 - **Markdown in bullets**: Bullets pass through `markdownify` with the wrapping `<p>` stripped, so links, bold and italics work; inline HTML still works via Kramdown
 - **Social handles**: Username only (not full URLs)
+- **`site.github` collision**: `jekyll-github-metadata` (bundled with `github-pages`) fills `site.github` with a metadata object when the user leaves `github:` unset; test it with `site.github.size > 0`, never plain `if site.github`
 - **Contact links**: Email (`mailto:`), phone (`tel:`) and website rendered as clickable links
 - **External links**: Links opening in a new tab carry `target="_blank" rel="noopener"`
 - **Print-friendly**: Social links hidden in print, replaced with text URLs
@@ -136,7 +138,8 @@ sections:
 - **Build testing**: `bundle exec jekyll build` must succeed
 - **Output check**: `_site/index.html` and `_site/assets/css/main.css` must exist (file presence only, no HTML validation)
 - **Artifact generation**: `_site/` uploaded as `jekyll-build`, kept 7 days
-- **Remote theme smoke test**: Builds with `remote_theme`, but never fails the job (`|| true`) — treat it as informational
+- **Release script test**: `.github/scripts/test-next-version.sh`
+- **Minimal consumer site test**: `.github/scripts/test-minimal-site.sh` builds this checkout's layouts with only `title` and `email` set and checks that optional parts (socials, analytics, bullets) render nothing when absent
 
 ### 2. Automated Release Process (`release.yml`)
 - **Trigger**: Push to `main`, skipped when the head commit message contains `ci skip` or `skip ci`
