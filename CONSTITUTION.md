@@ -6,12 +6,12 @@ This constitution defines the technical constraints, architecture decisions, and
 ## 🏗️ Technical Architecture
 
 ### Core Technology Stack
-- **Static Site Generator**: Jekyll 4.x
+- **Static Site Generator**: Jekyll 3.10, pinned by the `github-pages` gem (v232)
 - **Hosting Platform**: GitHub Pages (with remote theme support)
 - **Template Engine**: Liquid templating
 - **Styling**: SCSS with print-optimized CSS
 - **Content Management**: YAML-based data files
-- **Markdown Processor**: Kramdown
+- **Markdown Processor**: Kramdown 2.4
 - **CI/CD**: GitHub Actions with automated testing and releases
 - **Ruby Version**: 3.2.x (required for Bundler 2.7.0 compatibility)
 
@@ -23,17 +23,24 @@ harvard-style-cv-theme/
 │   └── cv.yml              # CV content structure (REQUIRED)
 ├── _layouts/
 │   ├── cv.html             # Main CV layout template
-│   └── default.html        # Base layout (inherited from Jekyll)
+│   └── default.html        # Base layout: <head>, SEO tag, optional analytics
 ├── assets/
-│   └── css/
-│       └── main.scss       # Stylesheet with print media queries
+│   ├── css/
+│   │   └── main.scss       # Stylesheet with print media queries
+│   └── screenshot-*.png    # README screenshots
 ├── .github/
-│   └── workflows/
-│       ├── ci.yml          # Continuous Integration workflow
-│       ├── release.yml     # Automated release workflow
-│       └── pages.yml       # GitHub Pages deployment
+│   ├── workflows/
+│   │   ├── ci.yml          # Continuous Integration workflow
+│   │   ├── release.yml     # Automated release workflow
+│   │   └── pages.yml       # GitHub Pages deployment
+│   ├── branch-protection.md # Recommended branch protection settings
+│   └── pages-setup.md      # One-time GitHub Pages setup guide
 ├── index.md                # Entry point (REQUIRED for remote theme)
+├── 404.html                # Not-found page (default layout)
+├── about.markdown          # Placeholder About page
 ├── Gemfile                 # Ruby dependencies
+├── CHANGELOG.md            # Keep a Changelog, maintained by hand
+├── VERSION                 # Not updated by the release workflow; tags are the source of truth
 └── README.md               # User-facing documentation
 ```
 
@@ -47,14 +54,15 @@ harvard-style-cv-theme/
 - **NO unsupported plugins**: Only use plugins included in `github-pages` gem
 - **Remote theme support**: Must work with `remote_theme: smirnoffmg/harvard-style-cv-theme`
 - **Public repository requirement**: Theme repo must be public for GitHub Pages access
-- **No custom build processes**: Rely on GitHub Pages automatic builds
+- **No custom build steps**: The demo site is built by `pages.yml` with a plain `bundle exec jekyll build`; anything beyond that would break users relying on GitHub Pages' own build of the remote theme
 
 ### 2. Layout Structure Requirements
 - **Header**: Centered name, contact info, social links, department/affiliation
 - **Sections**: All-caps bold titles with horizontal rules
 - **Entries**: Left-aligned institution/title, right-aligned date/location
-- **Bullets**: Standard unordered lists for achievements/details
-- **Responsive**: Mobile-first design with print optimization
+- **Bullets**: Standard unordered lists for achievements/details, each rendered through `markdownify`
+- **Social links**: SVG icons on screen (`.cv-socials`), full text URLs in print (`.cv-socials-print`)
+- **Responsive**: Breakpoints at 800px and 500px, plus a print media query
 
 ### 3. Data Schema Constraints
 ```yaml
@@ -62,7 +70,9 @@ harvard-style-cv-theme/
 title: "Full Name"                    # Large, bold, centered
 email: "email@domain.com"            # Clickable mailto: link
 department: "Dept, University, City" # Primary affiliation
-# Optional: phone, address, website, affiliation, social handles
+# Optional: phone, address, website, affiliation,
+#           linkedin, github, twitter, telegram, leetcode,
+#           google_analytics, yandex_metrika
 
 # _data/cv.yml structure
 sections:
@@ -72,22 +82,29 @@ sections:
         sub: "Degree/Role"           # Italic, optional
         location: "City, Country"    # Right-aligned, optional
         dates: "Year/Range"          # Right-aligned, optional
-        bullets:                     # Array of strings
+        bullets:                     # Array of Markdown strings
           - "Achievement or detail"
 ```
 
 ### 4. Styling Constraints
 - **Typography**: Times New Roman (serif) for academic appearance
 - **Colors**: Black text on white background for print compatibility
-- **Spacing**: 1-inch margins, 1.3 line height
+- **Spacing**: 1-inch margins on screen (0.5in in print), 1.3 line height
+- **Line length**: Body capped at `max-width: 44rem` (~85–90 characters per line). Do not raise it much: Bringhurst puts the limit for discontinuous text such as bibliographies at 85–90 characters (*The Elements of Typographic Style*, §2.1.2)
 - **Print optimization**: Separate print media queries
 - **Social icons**: SVG-based with fallback text for print
 
 ### 5. Content Guidelines
-- **HTML in bullets**: Allowed for formatting (bold, italics, links)
+- **Markdown in bullets**: Bullets pass through `markdownify` with the wrapping `<p>` stripped, so links, bold and italics work; inline HTML still works via Kramdown
 - **Social handles**: Username only (not full URLs)
-- **Contact links**: Email and website rendered as clickable links
+- **Contact links**: Email (`mailto:`), phone (`tel:`) and website rendered as clickable links
+- **External links**: Links opening in a new tab carry `target="_blank" rel="noopener"`
 - **Print-friendly**: Social links hidden in print, replaced with text URLs
+
+### 6. Analytics (opt-in)
+- **Google Analytics** (`google_analytics`) and **Yandex.Metrika** (`yandex_metrika`) are rendered in `default.html` only when their ID is set; with neither set the page ships no JavaScript
+- **Metrika goals**: Contact and social links carry `data-ym-goal="<name>_click"`; a small inline script sends `reachGoal` on click. Keep the attribute on any new contact link
+- **Metrika options**: Webvisor, clickmap and link tracking are enabled; document this in the README if it changes, since it affects visitors' privacy
 
 ## 🔄 Git Workflow & Branch Strategy
 
@@ -104,29 +121,35 @@ sections:
 
 ### 3. Version Management
 - **Semantic versioning**: Follow semver (MAJOR.MINOR.PATCH)
-- **Automatic versioning**: GitHub Actions automatically increments version
-- **Release notes**: Generated from commit messages and PR descriptions
-- **Tagging**: Automatic git tags for each release
+- **Automatic versioning**: `release.yml` derives the bump from commit message prefixes, so use Conventional Commits
+- **Release notes**: Write them in `CHANGELOG.md`; the GitHub release body is a fixed template
+- **Tagging**: Automatic `vX.Y.Z` git tags for each release
 
 ## 🚀 CI/CD Pipeline
 
-### 1. Continuous Integration (CI)
-- **Trigger**: On every push to `develop` and `master`
-- **Build testing**: Verify Jekyll builds successfully
-- **Lint checking**: Validate YAML syntax and HTML structure
-- **Dependency checking**: Ensure all dependencies are compatible
-- **Artifact generation**: Build and store site artifacts
+### 1. Continuous Integration (`ci.yml`)
+- **Trigger**: Push and pull request to `develop` and `main`
+- **YAML check**: `_config.yml` and `_data/cv.yml` must parse
+- **Build testing**: `bundle exec jekyll build` must succeed
+- **Output check**: `_site/index.html` and `_site/assets/css/main.css` must exist (file presence only, no HTML validation)
+- **Artifact generation**: `_site/` uploaded as `jekyll-build`, kept 7 days
+- **Remote theme smoke test**: Builds with `remote_theme`, but never fails the job (`|| true`) — treat it as informational
 
-### 2. Automated Release Process
-- **Trigger**: On merge to `main` branch
-- **Version bump**: Automatically increment semantic version
-- **Release creation**: Generate GitHub release with changelog
-- **Asset upload**: Include built site as release asset
-- **Tag creation**: Create git tag for the release
+### 2. Automated Release Process (`release.yml`)
+- **Trigger**: Push to `main`, skipped when the head commit message contains `ci skip` or `skip ci`
+- **Version bump** from commit messages since the last tag:
+  - `BREAKING CHANGE` or `major:` → major
+  - `feat:` or `feature:` → minor
+  - anything else → patch
+  - no tags yet → `1.0.0`
+- **Release creation**: GitHub release `vX.Y.Z` with a static body template — it does not list the actual commits; `CHANGELOG.md` is the real record
+- **Asset upload**: Built site as `harvard-cv-theme-vX.Y.Z.zip`
+- **Tag creation**: The release creates the `vX.Y.Z` tag
 
-### 3. GitHub Pages Deployment
-- **Source**: `main` branch
-- **Build**: Automatic Jekyll build by GitHub Pages
+### 3. GitHub Pages Deployment (`pages.yml`)
+- **Trigger**: Push to `main`, or manual `workflow_dispatch`
+- **Build**: `bundle exec jekyll build` with `JEKYLL_ENV=production` in Actions, deployed via `actions/deploy-pages`
+- **Pages source**: Must be set to "GitHub Actions" (see `.github/pages-setup.md`)
 - **Deployment**: Available at `https://smirnoffmg.github.io/harvard-style-cv-theme`
 
 ## 🔧 Development Rules
@@ -138,7 +161,7 @@ sections:
 - **Validate YAML syntax** before deployment
 
 ### 2. Template Development
-- **Liquid templating only**: No JavaScript or dynamic content
+- **Liquid templating only**: No JavaScript or dynamic content, except the opt-in analytics snippets (see Analytics)
 - **Conditional rendering**: Handle missing optional fields gracefully
 - **Accessibility**: Maintain semantic HTML structure
 - **SEO optimization**: Use jekyll-seo-tag plugin
@@ -164,15 +187,15 @@ sections:
 ## 🚫 Forbidden Practices
 
 ### 1. Technology Restrictions
-- **No JavaScript frameworks**: Pure HTML/CSS/SCSS only
+- **No JavaScript frameworks**: Pure HTML/CSS/SCSS; the only scripts allowed are the opt-in analytics snippets
 - **No database dependencies**: Static site generation only
-- **No external APIs**: Self-contained functionality
+- **No external APIs**: Self-contained functionality; the analytics endpoints (googletagmanager.com, mc.yandex.ru) are the sole exception and load only when configured
 - **No build tools**: No Webpack, Gulp, or similar
 
 ### 2. Content Restrictions
 - **No dynamic content**: All content must be pre-rendered
 - **No user input**: No forms or interactive elements
-- **No external dependencies**: No CDN resources or external fonts
+- **No external dependencies**: No CDN resources or external fonts; fonts come from the system stack
 - **No complex animations**: Simple CSS transitions only
 
 ### 3. Deployment Restrictions
@@ -270,6 +293,6 @@ sections:
 
 ---
 
-**Last Updated**: December 2024
-**Version**: 2.0
+**Last Updated**: October 2026
+**Version**: 2.1
 **Maintainer**: Maksim Smirnov
