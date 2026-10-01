@@ -7,7 +7,8 @@ $color-text: #000;
 body {
   font-family: $font-body;
   color: $color-text;
-  margin: 1in;
+  max-width: 44rem;
+  margin: 1in auto;
   line-height: 1.3;
   background: #fff;
   font-size: 1.05rem;

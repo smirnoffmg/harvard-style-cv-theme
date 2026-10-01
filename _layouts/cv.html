@@ -18,7 +18,7 @@ layout: default
         {% endif %}
         <div class="cv-socials" style="margin-top:0.5em;">
             {% if site.linkedin %}
-            <a class="cv-social-icon" href="https://linkedin.com/in/{{ site.linkedin }}" target="_blank"
+            <a class="cv-social-icon" href="https://linkedin.com/in/{{ site.linkedin }}" target="_blank" rel="noopener"
                 title="LinkedIn" data-ym-goal="linkedin_click">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path
@@ -27,7 +27,7 @@ layout: default
             </a>
             {% endif %}
             {% if site.github %}
-            <a class="cv-social-icon" href="https://github.com/{{ site.github }}" target="_blank" title="GitHub"
+            <a class="cv-social-icon" href="https://github.com/{{ site.github }}" target="_blank" rel="noopener" title="GitHub"
                 data-ym-goal="github_click">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path
@@ -36,7 +36,7 @@ layout: default
             </a>
             {% endif %}
             {% if site.twitter %}
-            <a class="cv-social-icon" href="https://twitter.com/{{ site.twitter }}" target="_blank" title="Twitter"
+            <a class="cv-social-icon" href="https://twitter.com/{{ site.twitter }}" target="_blank" rel="noopener" title="Twitter"
                 data-ym-goal="twitter_click">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path
@@ -45,7 +45,7 @@ layout: default
             </a>
             {% endif %}
             {% if site.telegram %}
-            <a class="cv-social-icon" href="https://t.me/{{ site.telegram }}" target="_blank" title="Telegram"
+            <a class="cv-social-icon" href="https://t.me/{{ site.telegram }}" target="_blank" rel="noopener" title="Telegram"
                 data-ym-goal="telegram_click">
                 <svg width="24px" height="24px" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
@@ -56,7 +56,7 @@ layout: default
             </a>
             {% endif %}
             {% if site.leetcode %}
-            <a class="cv-social-icon" href="https://leetcode.com/u/{{ site.leetcode }}" target="_blank" title="LeetCode"
+            <a class="cv-social-icon" href="https://leetcode.com/u/{{ site.leetcode }}" target="_blank" rel="noopener" title="LeetCode"
                 data-ym-goal="leetcode_click">
                 <svg width="24px" height="24px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -80,7 +80,7 @@ layout: default
             <a href="https://t.me/{{ site.telegram }}">Telegram: https://t.me/{{ site.telegram }}</a>
             {% endif %}
             {% if site.leetcode %}
-            <a href="https://leetcode.com/u/{{ site.leetcode }}">LeetCode: https://leetcode.com/{{ site.leetcode }}</a>
+            <a href="https://leetcode.com/u/{{ site.leetcode }}">LeetCode: https://leetcode.com/u/{{ site.leetcode }}</a>
             {% endif %}
         </div>
         {% if site.department %}
